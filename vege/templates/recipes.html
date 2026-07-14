@@ -26,7 +26,40 @@
         <input name="recipe_image" type="file" class="form-control">
       </div>
       <button type="submit" class="btn btn-success">Add recipe</button>
+      
+      
     </form>
+
+    <hr>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Recipe Name</th>
+          <th scope="col">Recipe Description</th>
+          <th scope="col">Recipe Image</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      {% for recipe in recipes %}
+      <tbody>
+        <tr>
+          <th scope="row">{{ forloop.couter }}</th>
+          <td>{{recipe.recipe_name}}</td>
+          <td>{{recipe.recipe_desc}}</td>
+          <td>
+            <img src="/media/{{recipe.recipe_image}}" style="height : 100px">
+          </td>
+          <td>
+            <a href="/delete_recipes/{{recipe.id}}/" class="btn btn-danger">Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
   </div>
+
 </body>
 </html>
