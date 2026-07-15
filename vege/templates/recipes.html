@@ -31,8 +31,22 @@
     </form>
 
     <hr>
+    
+    <div class="container mt-5">
+      <div class="mx-auto col 6">
+        <form>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Search Food</label>
+            <input name="search" type="text" value="{{recipe.recipe_name}}">
+          </div>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+      </div>
+    </div>
 
-    <table class="table">
+    <hr>
+
+    <table class="table mt-5">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -52,7 +66,10 @@
             <img src="/media/{{recipe.recipe_image}}" style="height : 100px">
           </td>
           <td>
-            <a href="/delete_recipes/{{recipe.id}}/" class="btn btn-danger">Delete</a>
+            <div>
+              <a href="/delete_recipes/{{recipe.id}}/" class="btn btn-danger m-1">Delete</a>
+              <a href="/update_recipes/{{recipe.id}}/" class="btn btn-success">Update</a>
+            </div>
           </td>
         </tr>
         {% endfor %}
