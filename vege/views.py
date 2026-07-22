@@ -2,7 +2,10 @@ from django.shortcuts import render , redirect
 from vege.models import *
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required(login_url="/login_page/")
 def recipe(request):
   if request.method == 'POST':
     data = request.POST
@@ -43,7 +46,7 @@ def update_recipes(request, id):
     queryset.recipe_name = recipe_name
     queryset.recipe_desc = recipe_desc
     
-    if queryset.recipe_image:
+    if recipe_image:
       queryset.recipe_image = recipe_image
 
     queryset.save()
@@ -53,6 +56,24 @@ def update_recipes(request, id):
   return render(request, 'update_recipes.html', context)
 
 def login_page(request):
+  if request.method == 'POST':
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+
+    if not User.objects.filter(username = username):
+      messages.info(request, 'Invalid username')
+      return redirect('/login_page/')
+    
+    user = authenticate(username = username, password = password)
+
+    if user is None:
+      messages.info(request, 'Invalid password')
+      return redirect('/login_page/')
+    else :
+      login(request, user)
+      return redirect('/recipes/')
+
+
   return render(request, 'login_page.html')
 
 def register_page(request):
