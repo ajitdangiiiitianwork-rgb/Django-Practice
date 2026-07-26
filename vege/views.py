@@ -123,14 +123,8 @@ def get_students(request):
   print(page_obj.object_list)
   return render(request, 'report/students.html', {'queryset' : page_obj})
 
+from .seed import gen_report_card
 def see_marks(request, student_id):
   queryset = SubjectMarks.objects.filter(student__student_id__student_id = student_id)
-  ranks = Student.objects.annotate(subject_marks = Sum('studentmarks__subject_marks')).order_by('-subject_marks', 'student_age')
-  curr_rank = -1
-  i = 1
-  for rank in ranks:
-    if student_id == rank.student_id.student_id:
-      curr_rank = i
-    i += 1
   total_marks = queryset.aggregate(total_marks = Sum('subject_marks'))
-  return render(request, 'report/see_marks.html', context = {'queryset' : queryset, 'total_marks' : total_marks, 'curr_rank' : curr_rank})
+  return render(request, 'report/see_marks.html', context = {'queryset' : queryset, 'total_marks' : total_marks,})

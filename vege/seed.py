@@ -1,9 +1,11 @@
 from logging import exception
 
+from django.utils.timezone import now
 from faker import Faker
 import random
 from . models import *
 fake = Faker()
+from django.db.models import Sum
 
 def seed_db(n=10) -> None:
   departments_obj = Department.objects.all()
@@ -43,3 +45,16 @@ def create_subject_marks(n):
         )
   except Exception as e:
     print(e)
+
+def gen_report_card():
+  ranks = Student.objects.annotate(subject_marks = Sum('studentmarks__subject_marks')).order_by('-subject_marks')
+  i = 1
+  for rank in ranks:
+    ReportCard.objects.update_or_create(
+      student = rank,
+      date_of_report_card_generation=now().date(),
+      defaults={
+                'student_rank': i,
+            }
+    )
+    i = i + 1

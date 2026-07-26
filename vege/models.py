@@ -54,3 +54,16 @@ class SubjectMarks(models.Model):
     return f"{self.student.student_name} {self.subject.subject_name}"
   class Meta:
     unique_together = ['student', 'subject']
+
+class ReportCard(models.Model):
+  student = models.ForeignKey(Student, related_name="studentreportcard", on_delete=models.CASCADE)
+  student_rank = models.IntegerField()
+  date_of_report_card_generation = models.DateField(auto_now_add=True)
+
+  class Meta:
+    constraints = [
+            models.UniqueConstraint(
+                fields=['student', 'date_of_report_card_generation'],
+                name='unique_student_reportcard'
+            )
+        ]
