@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from  django.db.models import Q
+from  django.db.models import Q, Sum
 # Create your views here.
 @login_required(login_url="/login_page/")
 def recipe(request):
@@ -104,6 +104,9 @@ def register_page(request):
 
 def get_students(request):
   queryset = Student.objects.all()
+  ranks = Student.objects.annotate(subject_marks = Sum('studentmarks__subject_marks')).order_by('-subject_marks', 'student_age')
+  for rank in ranks:
+    print(f"{rank.student_name} : {rank.subject_marks}")
   if request.GET.get('search'):
     search = request.GET.get('search')
     queryset = queryset.filter(
@@ -119,3 +122,15 @@ def get_students(request):
   page_obj = paginator.get_page(page_number)
   print(page_obj.object_list)
   return render(request, 'report/students.html', {'queryset' : page_obj})
+
+def see_marks(request, student_id):
+  queryset = SubjectMarks.objects.filter(student__student_id__student_id = student_id)
+  ranks = Student.objects.annotate(subject_marks = Sum('studentmarks__subject_marks')).order_by('-subject_marks', 'student_age')
+  curr_rank = -1
+  i = 1
+  for rank in ranks:
+    if student_id == rank.student_id.student_id:
+      curr_rank = i
+    i += 1
+  total_marks = queryset.aggregate(total_marks = Sum('subject_marks'))
+  return render(request, 'report/see_marks.html', context = {'queryset' : queryset, 'total_marks' : total_marks, 'curr_rank' : curr_rank})
