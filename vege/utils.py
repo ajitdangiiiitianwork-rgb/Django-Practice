@@ -3,7 +3,7 @@ from django.utils.text import slugify
 import uuid
 
 def generate_slug(title: str) -> str:
-  from core.vege.models import Recipe
+  from vege.models import Recipe
   title = slugify(title)
 
   while (Recipe.objects.filter(slug = title).exists()):
