@@ -6,6 +6,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from  django.db.models import Q, Sum
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 # Create your views here.
 @login_required(login_url="/login_page/")
 def recipe(request):
