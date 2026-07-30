@@ -1,10 +1,15 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .utils import send_mail_to_client
+from .utils import send_mail_to_client, send_mail_with_attachment
+from django.conf import settings
 
 # Create your views here.
 def send_email(request):
-  send_mail_to_client()
+  subject = "This mail is from Django server."
+  message = "Please check the attached document."
+  recipient_list = ['112415014@cse.iiitp.ac.in']
+  path = f"{settings.BASE_DIR}/home/templates/home/index.html"
+  send_mail_with_attachment(subject=subject, message=message, recipient_list=recipient_list, file_path=path)
   return redirect('/')
 
 def home(request):
