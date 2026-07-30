@@ -16,35 +16,39 @@
   </style>
 </head>
 <body>
-  <h1>Hey! This a Django Server</h1>
-  <hr>
-  <h3>This template is returned by django server.</h3>
-  <br>
-  <a href="/contact/">Contact</a>
-  <br>
-  <a href="/about/">About</a>
-  <hr>
-  <table class="container">
-  <tr>
-    <th>S.No.</th>
-    <th>Name</th>
-    <th>Age</th>
-    <th>Can Vote</th>
-  </tr>
-  {% for people in peoples %}
-  <tr>
-    <td>{{forloop.counter}}</td>
-    <td>{{people.name}}</td>
-    <td>{{people.age}}</td>
-    <td {% if people.age >= 18 %} style="background:green" {% endif %} >
-      {% if people.age >= 18 %}
-      👍
-      {% else %}
-      👎
-      {% endif %}
-    </td>
-  </tr>
-  {% endfor %}
+  <div class="container mt-5">
+    <h1>Hey! This a Django Server</h1>
+    <a href="{% url 'send_email' %}" class="btn btn-success">Send Mail</a>
+  </div>
+  <div class="container mt-5">
+    <h3>This template is returned by django server.</h3>
+    <br>
+    <a href="/contact/">Contact</a>
+    <br>
+    <a href="/about/">About</a>
+    <hr>
+    <table class="container">
+    <tr>
+      <th>S.No.</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Can Vote</th>
+    </tr>
+    {% for people in peoples %}
+    <tr>
+      <td>{{forloop.counter}}</td>
+      <td>{{people.name}}</td>
+      <td>{{people.age}}</td>
+      <td {% if people.age >= 18 %} style="background:green" {% endif %} >
+        {% if people.age >= 18 %}
+        👍
+        {% else %}
+        👎
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
 </table>
+  </div>
 </body>
 </html>
