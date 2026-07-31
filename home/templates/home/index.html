@@ -19,13 +19,17 @@
   <div class="container mt-5">
     <h1>Hey! This a Django Server</h1>
     <a href="{% url 'send_email' %}" class="btn btn-success">Send Mail</a>
+    <a href="{% url 'recipes' %}" class="btn btn-primary">Recipes-Page</a>
+    <a href="{% url 'get_students' %}" class="btn btn-secondary">Students-Page</a>
+    <hr>
   </div>
+  
   <div class="container mt-5">
     <h3>This template is returned by django server.</h3>
     <br>
-    <a href="/contact/">Contact</a>
+    <a href="/contact/" class="btn btn-link">Contact</a>
     <br>
-    <a href="/about/">About</a>
+    <a href="/about/" class="btn btn-link">About</a>
     <hr>
     <table class="container">
     <tr>

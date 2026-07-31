@@ -2,6 +2,8 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .utils import send_mail_to_client, send_mail_with_attachment
 from django.conf import settings
+from .models import *
+import random
 
 # Create your views here.
 def send_email(request):
@@ -13,6 +15,9 @@ def send_email(request):
   return redirect('/')
 
 def home(request):
+
+  Car.objects.create(c_name = f"Nexon-{random.randint(0, 100)}")
+
   people = [
     {'name' : 'Ajit', 'age' : 21},
     {'name' : 'Rishbah', 'age' : 24},
